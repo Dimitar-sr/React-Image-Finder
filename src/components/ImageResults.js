@@ -5,7 +5,7 @@ import IconButton from 'material-ui/IconButton';
 import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { spacing } from 'material-ui/styles';
+
 
 class ImageResults extends Component {
     state = {
@@ -44,7 +44,7 @@ class ImageResults extends Component {
                                 </IconButton>
                             }
                         >
-                            <img src={img.largeImageURL} alt='slika' />
+                            <img src={img.largeImageURL} alt={img.user} />
                         </GridTile>
                     ))}
                 </GridList>
@@ -65,8 +65,7 @@ class ImageResults extends Component {
             modal={false}
             open={this.state.open}
             onRequestClose={this.handleClose}>
-            <img src={this.state.currentImg} style={{ width: '100%' }} />
-            >
+            <img src={this.state.currentImg} style={{ width: '100%' }}alt={images.user} />
             </Dialog>
         </div>
         )

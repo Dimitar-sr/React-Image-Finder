@@ -37,7 +37,6 @@ class Search extends Component {
         <div>
             <TextField
             name='searchText'
-            value={this.state.searchText}
             onChange={this.onTextChange}
             floatingLabelText='Search for Images'
             fullWidth={true}
