@@ -3,8 +3,9 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import axios from 'axios';
+import ImageResults from './ImageResults';
 
-export class Search extends Component {
+class Search extends Component {
     state = {
         searchText: '',
         apiUrl: 'https://pixabay.com/api',
@@ -15,17 +16,23 @@ export class Search extends Component {
     }
 
     onTextChange = (event) => {
-        this.setState({[event.target.name]: event.target.value}, () => {
-            axios.get(`${this.state.apiUrl}/?key=${this.state.apiKey}&q=${this.state.searchText}&image_type=photo&per_page=${this.state.amount}&safesearch=true`)
-                .then(res => this.setState({images: res.data.hits}))
-                .catch(err => console.log(err));
-        });
+        const val = event.target.value;
+
+        if (val === '') {
+            this.setState({images: []})
+        } else {
+            this.setState({[event.target.name]: val}, () => {
+                axios.get(`${this.state.apiUrl}/?key=${this.state.apiKey}&q=${this.state.searchText}&image_type=photo&per_page=${this.state.amount}&safesearch=true`)
+                    .then(res => this.setState({images: res.data.hits}))
+                    .catch(err => console.log(err));
+            });
+        }
+        
     }
 
     onAmountChange = (event, index, value) => this.setState({ amount: value });
 
     render() {
-        console.log(this.state.images);
         return (
         <div>
             <TextField
@@ -49,6 +56,7 @@ export class Search extends Component {
                 <MenuItem value={50} primaryText="50" />
             </SelectField>
             <br/>
+            {this.state.images.length > 0 ? (<ImageResults images={this.state.images} />) : null}
         </div>
         )
     }
